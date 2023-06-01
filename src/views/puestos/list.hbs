@@ -1,0 +1,37 @@
+<div class="container mt-1">
+    <div class="card mb-1">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="table-puestos" class="table table-bordered " style="width:100%" cellspacing="0">
+                    <thead style="background-color: rgb(60,141,188">
+                        <tr style="color: white !important">
+                            <td style="font-size:80%;"><strong>Código</strong></td>
+                            <td style="font-size:80%;"><strong>Nombre Puesto</strong></td>
+                            <td style="font-size:80%;"><strong>Dirección</strong></td>
+                            <td style="font-size:80%;"><strong>Mesas</strong></td>
+                            <td style="font-size:80%;"><strong>Municipio</strong></td>
+                            <td style="font-size:80%;"><strong>Acción</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if puestos }}
+                        {{#each puestos }}
+                        <tr>
+                            <td style="font-size:70%;">{{codigo }}</td>
+                            <td style="font-size:70%;">{{nombpuesto }}</td>
+                            <td style="font-size:70%;">{{dir }}</td>
+                            <td style="font-size:70%;">{{mesas }}</td>
+                            <td style="font-size:70%;">{{mpio }}</td>
+                            <td>
+                                <a href="/puestos/edit/{{codigo }}" class="material-icons btn-xs btn-primary">create</a>
+                                <a href="/puestos/delete/{{codigo }}" class="material-icons btn-xs btn-danger">delete</a>
+                            </td>
+                        </tr>
+                        {{/each }}
+                        {{/if }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

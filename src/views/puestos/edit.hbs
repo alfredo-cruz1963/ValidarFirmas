@@ -1,0 +1,58 @@
+<div class="container p-5">
+    <div class="row">
+        <div class="col-sm-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h6>Edita puesto votación</h6>
+                </div>
+                <div class="card-body">
+                    <form action="/puestos/edit/{{puestos.codigo}}" method="POST">
+                        <div class="row">
+                            <div class="col-6">
+                                Código
+                                <input type="text" name="codigo" id='codigo' class="form-control" placeholder="Código" value="{{puestos.codigo}}" title="Recibe solo numeros y max 10 digitos" pattern="^([0-9]){9,9}$" readonly required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            Nombre Puesto
+                            <input type="text" name="nombpuesto" id='nombpuesto' class="form-control" placeholder="Descripción" title="Max 40 caracteres" pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{5,40}" value="{{puestos.nombpuesto}}" required>
+                        </div>
+                        <div class="form-group mt-3">
+                            Dirección
+                            <input type="text" name="dir" id='dir' class="form-control" placeholder="Dirección" title="Max 40 caracteres" pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{5,40}" value="{{puestos.dir}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Municipio</label>
+                            <select class="custom-select" name="codmpio" id="codmpio" required>
+                                <!-- <option value="">Seleccione una Municipio</option> -->
+                                <option selected value="{{puestos.codmpio}}">{{puestos.mpio}}</option>
+                                {{#each cytes }}
+                                <option value="{{codigo}}" >{{mpio}}</option>
+                                {{/each }}
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Mesas
+                                <input type="number" name="mesas" class="form-control" placeholder="Mesas" value="{{puestos.mesas}}" title="Maximo 3 digitos y solo carácteres numericos." pattern="^([0-9]){1,3}$" required>
+                            </div>
+                            <div class="col-4">
+                                Mujeres
+                                <input type="number" name="mujeres" class="form-control" placeholder="Mujeres" value="{{puestos.mujeres}}" title="Maximo 5 digitos y solo carácteres numericos." pattern="^([0-9]){1,5}$" required>
+                            </div>
+                            <div class="col-4">
+                                Hombres
+                                <input type="number" name="hombres" class="form-control" placeholder="Hombres" value="{{puestos.hombres}}" title="Maximo 5 digitos y solo carácteres numericos." pattern="^([0-9]){1,5}$" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button class="btn btn-primary btn-block">
+                                Grabar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

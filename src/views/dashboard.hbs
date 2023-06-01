@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-12 col-sm-6 col-md-4">
+    <div class="info-box bg-success text-white">
+      <span class="info-box-icon elevation-1"><i class="fas fa-thumbs-up"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Firmas Validas</span>
+        <h1>{{dato1}}</h1>
+        <!-- <span class="info-box-number">25150</span> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-6 col-md-4">
+    <div class="info-box bg-danger text-white">
+      <span class="info-box-icon elevation-1"><i class="fas fa-thumbs-down"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Firmas NO Validas</span>
+        <h1>{{dato2}}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-6 col-md-4">
+    <div class="info-box bg-primary text-white">
+      <span class="info-box-icon elevation-1"><i class="fas fa-check"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Planillas Digitadas</span>
+        <h1>{{dato3}}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card mb-4">
+      <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Firmas Validas por Municipio</div>
+      <div class="card-body">
+        {{!-- <canvas id="BarChart" width="100%" height="60"></canvas> --}}
+        <canvas id="BarChart" style="min-height: 450px; height: 450px; max-height: 450px; max-width: 100%;">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" style="background-color: rgba(232, 240, 254, 0.60)">
+            <i class="fas fa-chart-bar text-success mr-1"></i><strong>Firmas por sexo</strong>
+          </div>
+          <div class="card-body">
+            <canvas id="BarChartSexo" style="min-height: 450px; height: 450px; max-height: 450px; max-width: 100%;">
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script src="/js/chart.js"></script>
+<script>
+ // Dashboar para el municipio de Acacias
+  var bgcolor = [];
+
+  for (i = 0; i < 30; i++) {
+    var color1 = (Math.floor(Math.random() * (255 - 0) + 0));
+    var color2 = (Math.floor(Math.random() * (255 - 0) + 0));
+    var color3 = (Math.floor(Math.random() * (255 - 0) + 0));
+    bgcolor.push("rgba(" + color1.toString() + "," + color2.toString() + "," + color3.toString() + ", 1)");
+  }
+
+  // Bar Chart Example
+  var ctx = document.getElementById('BarChart').getContext('2d');
+  var myLineChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{{ mpios }}},
+  datasets: [{
+    label: "Total",
+    backgroundColor: bgcolor,
+    data: {{ firmas }},
+    }],
+  },
+  options: {
+    legend: {
+      display: false
+    }
+  }
+});
+
+  var ctxSexo = document.getElementById('BarChartSexo').getContext('2d');
+  var myLineChart = new Chart(ctxSexo, {
+    type: 'pie',
+    data: {
+      labels: ["Mujeres", "Hombres"],
+      datasets: [{
+        label: "Total",
+        backgroundColor: ["rgba(241, 157, 209", "rgba(47,10,181)"],
+        data: {{{ genero }}},
+      }],
+    },
+  options: {
+    legend: {
+      display: false
+    }
+  }
+  });
+
+</script>

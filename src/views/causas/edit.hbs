@@ -1,0 +1,28 @@
+<div class="container p-5">
+    <div class="row">
+        <div class="col-sm-4 offset-md-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h6>Edita causal</h6>
+                </div>
+                <div class="card-body">
+                    <form action="/causas/edit/{{causal.codigo}}" method="POST">
+                        <div class="row">
+                            <div class="col-4">
+                                Código
+                                <input type="text" name="codigo" id='codigo' class="form-control" placeholder="Cod" value="{{causal.codigo}}" title="Recibe solo numeros y max 2 digitos" pattern="^([0-9]){2,2}$" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            Causal
+                            <input type="text" name="descripcion" id='descripcion' class="form-control" placeholder="Causal" value="{{causal.descripcion}}" title="Max 50 caracteres" pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{5,50}" autofocus required>
+                        </div>
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary float-right">Grabar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

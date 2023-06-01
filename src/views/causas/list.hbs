@@ -1,0 +1,33 @@
+<div class="container mt-1">
+    <div class="col-md-8 mx-auto">
+        <div class="card ">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="table-causas" class="table table-bordered " style="width:100%" cellspacing="0">
+                        <thead style="background-color: #337ab7">
+                            <tr style="color: white !important" >
+                                <td style="font-size:80%;"><strong>Código</strong></td>
+                                <td style="font-size:80%;"><strong>Causal</strong></td>
+                                <td style="font-size:80%;"><strong>Acción</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#if causal }}
+                            {{#each causal }}
+                            <tr>
+                                <td style="font-size:70%;">{{codigo }}</td>
+                                <td style="font-size:70%;">{{descripcion }}</td>
+                                <td>
+                                    <a href="/causas/edit/{{codigo}}" class="material-icons btn-xs btn-primary">create</a>
+                                    <a href="/causas/delete/{{codigo}}" class="material-icons btn-xs btn-danger">delete</a>
+                                </td>
+                            </tr>
+                            {{/each }}
+                            {{/if }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

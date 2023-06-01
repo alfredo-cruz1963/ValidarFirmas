@@ -1,0 +1,205 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="col-sm-8 offset-md-2">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h6>Registrar firma</h6>
+        </div>
+        <div class="card-body">
+          <form action="/firmas/grabar" method="POST">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card card-primary" style="height: 400px;">
+                  <div class="card-body">
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" name="cedula" placeholder="Cedula" id="cedula"
+                        title="Recibe solo numeros" pattern="^([0-9]){5,10}$" value="{{dcto}}" readonly>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="nombres" class="form-control" placeholder="Nombres" id="nombres"
+                        value="{{datos.nombres}}" title="Max 30 caracteres" pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{3,30}"
+                        required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="apellidos" class="form-control" placeholder="Apellidos" id="apellidos"
+                        value="{{datos.apellidos}}" title="Max 30 caracteres"
+                        pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{3,30}" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="dir" class="form-control" placeholder="Dirección" value="{{datos.dir}}"
+                        title="Max 30 caracteres" pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{3,30}">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="barrio" class="form-control" placeholder="Barrio"
+                        value="{{datos.barrio}}" title="Max 30 caracteres" pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{5,30}">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="cel" id="cel" placeholder="Celular"
+                        value="{{datos.tele}}" title="Recibe solo numeros" pattern="^([0-9]){10,10}$">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm" id="consultaAdres">Consultar</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card card-primary" style="height: 400px;">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label>Municipio</label>
+                      <select class="custom-select" name="codmpio" id="codmpio" readonly>
+                        <option selected value="{{mcodmpio}}">{{mnombmpio}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Puesto de Votación</label>
+                      <select class="custom-select" name="puesto" id="puesto">
+                        <option selected value="{{mcodpto}}">{{mnombpto}}</option>
+                        {{!-- {{#each puestos }}
+                        <option value="{{codigo}}">{{nombpuesto}}</option>
+                        {{/each }} --}}
+                      </select>
+                      <span>{{nomptoaux}}</span>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        Mesa
+                        <input type="text" class="form-control" name="mesa" placeholder="Mesa" value="{{mmesa}}"
+                          title="Recibe solo numeros" pattern="^([0-9]){2,2}$" readonly>
+                      </div>
+                      <div class="col-6">
+                        Planilla
+                        <input type="text" class="form-control" name="planilla" placeholder="Planilla"
+                          title="Recibe solo numeros" pattern="^([0-9]){1,6}$" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row mt-2">
+                      <div class="col-sm-12">
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" id="sexo1" name="sexo" value="1" required class="custom-control-input">
+                          <label class="custom-control-label" for="sexo1">Masculino</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" id="sexo2" name="sexo" value="2" required class="custom-control-input">
+                          <label class="custom-control-label" for="sexo2">Femenino</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-group ">
+                        <button type="submit" class="btn btn-primary btn-block consultaAdres">Grabar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a href="/firmas/view" class="text-danger" style="text-align: right;">Anular</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  var misexo = {{{ genero }}}
+  var mflag = {{{ flag }}}
+
+  if (misexo == 1 || misexo == 2) {
+    if (misexo == 1) {
+      document.querySelector('#sexo1').checked = true;
+    } else {
+      document.querySelector('#sexo2').checked = true;
+    }
+  }
+
+  if (mflag == 1) {
+    document.getElementById("consultaAdres").style.display = "none";
+  }
+
+  $(document).ready(function () {
+    $('#consultaAdres').click(function (event) {
+      event.preventDefault();
+      var mCedula = $('#cedula').val();
+
+      $.ajax({
+        url: "/firmas/consultaAdres/" + mCedula,
+        method: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        success: function (res) {
+          if (res === "Fallo") {
+            Swal.fire("NO existe en la BD de Adres", "", "error");
+          } else {
+            $('#nombres').val(res.nombres);
+            $('#apellidos').val(res.apellidos);
+            document.getElementById("consultaAdres").style.display = "none";
+          }
+        }
+      });
+    });
+  });
+
+</script>
+
+{{!--
+<script>
+  var misexo = {{{ genero }}}
+  var codptovotar = {{{ acodpuesto }}}
+  var nomptovotar = {{{ anompuesto }}}
+  var ptosMpios = [];
+  var pvotacion = [];
+
+  if (misexo == 1 || misexo == 2) {
+    if (misexo == 1) {
+      document.querySelector('#sexo1').checked = true;
+    } else {
+      document.querySelector('#sexo2').checked = true;
+    }
+  }
+
+  for (var i in codptovotar) {
+    pvotacion.push([
+      codptovotar[i],
+      nomptovotar[i]
+    ]);
+  }
+
+  function llenarArray(codpto) {
+    ptosMpios = []
+    for (let i = 0; i < pvotacion.length; i++) {
+      var currentNumber = pvotacion[i][0];
+      var currentNombre = pvotacion[i][1];
+
+      if (currentNumber.substr(0, 5) == codpto) {
+        ptosMpios.push([currentNumber, currentNombre])
+      }
+    }
+  }
+
+  function llenarPuestos() {
+    var municipios = document.getElementById('codmpio');
+    var puestosvotacion = document.getElementById('puesto');
+    var mpioSeleccionado = municipios.value
+
+    // Se limpian los puestos de votacion
+    puestosvotacion.innerHTML = '<option value="">Seleccione un Puesto...</option>'
+
+    if (mpioSeleccionado !== '') {
+      // Se seleccionan los puestos de votacion por cada municipio
+      llenarArray(mpioSeleccionado);
+
+      // Insertamos los puestos de votacion
+      ptosMpios.forEach(function (puesto) {
+        let opcion = document.createElement('option')
+        opcion.value = puesto[0];
+        opcion.text = puesto[1];
+        puestosvotacion.add(opcion);
+      });
+    }
+  }
+</script>
+--}}

@@ -1,0 +1,39 @@
+<div class="container mt-1">
+    <div class="col-md-12 mx-auto">
+        <div class="card ">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped table-bordered mt-3" style="width:100%">
+                        <thead style="background-color: #337ab7">
+                            <tr style="color: white !important">
+                                <td><strong>id</strong></td>
+                                <td><strong>Usuario</strong></td>
+                                <td><strong>Nombre</strong></td>
+                                <td><strong>Email</strong></td>
+                                <td><strong>Celular</strong></td>
+                                <td><strong>Acción</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#if usuarios }}
+                            {{#each usuarios }}
+                            <tr>
+                                <td>{{id }}</td>
+                                <td>{{username }}</td>
+                                <td>{{fullname }}</td>
+                                <td>{{email }}</td>
+                                <td>{{cel }}</td>
+                                <td>
+                                    <a href="/users/edit/{{id}}" class="material-icons btn-xs btn-primary">create</a>
+                                    <a href="/users/delete/{{id}}" class="material-icons btn-xs btn-danger">delete</a>
+                                </td>
+                            </tr>
+                            {{/each }}
+                            {{/if }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div

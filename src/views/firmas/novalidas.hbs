@@ -1,0 +1,48 @@
+<br><br>
+<div class="container p-5">
+  <div class="row">
+    <div class="col-sm-4 offset-md-4">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h6>Firma NO valida</h6>
+        </div>
+        <div class="card-body">
+          <form action="/firmas/savenv" method="POST">
+            <div class="row">
+              <div class="col-6">
+                <input type="text" name="cedula" id='cedula' class="form-control" placeholder="Cedula"
+                  value="{{cedula}}" title="Recibe solo numeros y max 10 digitos" pattern="^([0-9]){5,10}$" readonly
+                  required>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <input type="text" name="nombre" id='nombre' class="form-control" placeholder="Nombre"
+                title="Max 50 caracteres" pattern="[a-zA-Z0-9áéíóúñÑ#@$&/ ,.'-]{3,50}" value="{{nombre}}" required>
+            </div>
+            <div class="form-group">
+              <label>Causal</label>
+              <select class="custom-select" name="causal" id="causal" required>
+                <option selected value="{{codcau}}">{{mnomcau}}</option>
+                {{#each causas }}
+                <option value="{{codigo}}">{{descripcion}}</option>
+                {{/each }}
+              </select>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <input type="text" name="planilla" class="form-control" placeholder="Planilla"
+                  title="Maximo 6 digitos y solo carácteres numericos." pattern="^([0-9]){1,6}$" autofocus required>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <button class="btn btn-primary btn-block">
+                Grabar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

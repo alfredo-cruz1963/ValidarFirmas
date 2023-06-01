@@ -1,0 +1,49 @@
+<div class="container p-5">
+    <div class="row">
+        <div class="col-sm-8 offset-md-2">
+            <div class="card ">
+                <div class="card-header bg-dark text-white ">
+                    <h5>Perfil</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/perfil/{{user.id}}" method="POST">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="fullname" class="col-sm-2 col-form-label text-right">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name='fullname' id="fullname" placeholder="Nombre usuario" title="Max 50 caracteres" value="{{user.fullname}}"
+                                    pattern="[a-zA-Z0-9áéíóúñŃ#@$&/ ,.'-]{3,50}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="usenamer" class="col-sm-2 col-form-label text-right">users</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name='username' id="username" placeholder="users" title="Max 20 caracteres" value="{{user.username}}"
+                                    pattern="^([a-z]+[0-9]{0,2}){5,20}$" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-2 col-form-label text-right">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" name='email' id="email" placeholder="Email" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required value="{{user.email}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cel" class="col-sm-2 col-form-label text-right">#Celular</label>
+                                <div class="col-sm-4">
+                                    <input type="tel" class="form-control" name="cel" placeholder="Celular"
+                                    title="Recibe solo numeros" pattern="^([0-9]){10,10}$" value="{{user.cel}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-1">
+                            <div class="col-sm-5 mx-auto">
+                                <button class="btn btn-primary btn-block ">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

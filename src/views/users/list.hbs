@@ -1,0 +1,22 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each usuarios}}
+        <div class="col-md-4">
+            <div class="card ">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="fas fa-user fa-sm fa-fw pull-right" ></i>  
+                        <strong>{{rol}}</strong> 
+                    </h4>
+                    <p class="m-2"><strong>Usuario: </strong> {{username}}</p>
+                    <p class="m-2"><strong>Nombre: </strong> {{fullname}}</p>
+                    <p class="m-2"><strong>Correo: </strong> {{email}}</p>
+                    <p class="m-2"><strong>Celular: </strong> {{cel}}</p>
+                    <a class="btn btn-danger" href="/users/delete/{{id}}">Delete</a>
+                    <a class="btn btn-secondary" href="/users/edit/{{id}}">Editar</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

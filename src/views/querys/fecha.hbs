@@ -1,0 +1,23 @@
+<div class="container p-5">
+    <div class="row">
+        <div class="col-sm-4 offset-md-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h6>Digite Fecha de Consulta</h6>
+                </div>
+                <div class="card-body">
+                    <form action="/querys/listdate" method="POST">
+                        <div class="form-group ">
+                            Fecha
+                            <input type="date" class="form-control" name="fecha" placeholder="Fecha"
+                            autofocus required>
+                        </div>
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-info float-right">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

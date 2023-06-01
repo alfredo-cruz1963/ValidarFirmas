@@ -1,0 +1,39 @@
+<div class="container mt-1">
+    <div class="col-md-12 mx-auto">
+        <div class="card ">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="table-planillas" class="table table-striped table-bordered mt-3" style="width:100%">
+                        <thead style="background-color: #337ab7">
+                            <tr style="color: white !important">
+                                <td style="font-size:80%;"><strong>cedula</strong></td>
+                                <td style="font-size:80%;"><strong>Nombre</strong></td>
+                                <td style="font-size:80%;"><strong>Teléfono</strong></td>
+                                <td style="font-size:80%;"><strong>Puesto</strong></td>
+                                <td style="font-size:80%;"><strong>Municipio</strong></td>
+                                <td style="font-size:80%;"><strong>Acción</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#if datos }}
+                            {{#each datos }}
+                            <tr>
+                                <td style="font-size:70%;">{{cedula }}</td>
+                                <td style="font-size:70%;">{{nombre }}</td>
+                                <td style="font-size:70%;">{{cel }}</td>
+                                <td style="font-size:70%;">{{nombpuesto }}</td>
+                                <td style="font-size:70%;">{{mpio }}</td>
+                                <td>
+                                    <a href="/querys/edit/{{cedula}}" class="material-icons btn-xs btn-primary">create</a>
+                                    <a href="/querys/delete/{{cedula}}" class="material-icons btn-xs btn-danger">delete</a>
+                                </td>
+                            </tr>
+                            {{/each }}
+                            {{/if }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div

@@ -1,0 +1,28 @@
+<div class="container p-5">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <p class="text-center">Olvidaste tu contraseña? Aquí puede recuperar fácilmente un nuevo
+                        Password.</p>
+                </div>
+                <div class="card-body">
+                    <form action="/forgot" method="POST">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Email" name="email" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block">Request new password</button>
+                    </form>
+                    <p class="mt-2">
+                        <a href="/logout">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

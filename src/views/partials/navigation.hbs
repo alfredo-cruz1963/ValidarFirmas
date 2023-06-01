@@ -1,0 +1,252 @@
+{{#if user}}
+<nav class="sb-topnav navbar navbar-expand navbar-dark " style="background-color: RGB(54,127,169);">
+  <a class="navbar-brand mr-0 mr-md-2  text-white">
+    <img src="img/firma.ico" style="width: 2rem;">
+    Firmas
+  </a>
+
+  <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"></form>
+
+  <ul class="navbar-nav ml-auto ml-md-0">
+    <li class="nav-item dropdown active">
+      <a class="nav-link dropdown-toggle " id="userDropdown" href="#" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user fa-fw text-white"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right " aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="/perfil">
+          <i class="fas fa-user-tie fa-sm fa-fw pull-right text-primary"></i>
+          Perfil
+        </a>
+        <a class="dropdown-item" href="/change">
+          <i class="fas fas fa-lock fa-sm fa-fw pull-right text-warning"></i>
+          Cambiar Password
+        </a>
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item " href="/logout">
+          <i class="fas fa-sign-out-alt fa-sm fa-fw pull-right text-danger"></i>
+          Cerrar sesión
+        </a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<div id="layoutSidenav">
+  <div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+      <div class="sb-sidenav-menu">
+        <div class="nav">
+          <a class="nav-link " href="/home">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-home text-white"></i>
+            </div>
+            Dashboard
+          </a>
+
+          <div class="sb-sidenav-menu-heading text-white">MENU</div>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+            aria-expanded="false" aria-controls="collapsePages">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-book-open text-warning"></i>
+            </div>
+            Validar
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down text-white"></i>
+            </div>
+          </a>
+          <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+
+              <a class="nav-link collapsed" href="/firmas/add">
+                <div class="sb-nav-link-icon text-success">
+                  <i class="fas fa-id-card"></i>
+                </div>
+                Adiciona Firma
+              </a>
+
+              <a class="nav-link collapsed" href="/firmas/add1">
+                <div class="sb-nav-link-icon text-warning">
+                  <i class="fa fa-list-alt"></i>
+                </div>
+                Edita Firma
+              </a>
+
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth1"
+                aria-expanded="false" aria-controls="pagesCollapseAuth1">
+                <div class="sb-nav-link-icon text-primary">
+                  <i class="fas fa-search"></i>
+                </div>
+                Consultas
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div class="collapse" id="pagesCollapseAuth1" aria-labelledby="headingOne"
+                data-parent="#sidenavAccordionPages">
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link collapsed" href="/querys/add">
+                    <div class="sb-nav-link-icon text-info">
+                      <i class="fas fa-check-double"></i>
+                    </div>
+                    Planillas
+                  </a>
+
+                  <a class="nav-link collapsed" href="/querys/add1">
+                    <div class="sb-nav-link-icon text-success">
+                      <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    Por Fecha
+                  </a>
+                </nav>
+              </div>
+
+              {{#if (eq user.rol 'Administrador')}}
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth"
+                aria-expanded="false" aria-controls="pagesCollapseAuth">
+                <div class="sb-nav-link-icon text-danger">
+                  <i class="fa fa-print"></i>
+                </div>
+                Reportes
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                data-parent="#sidenavAccordionPages">
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link collapsed" href="/querys/print1">
+                    <div class="sb-nav-link-icon text-info">
+                      <i class="fas fa-file-pdf"></i>
+                    </div>
+                    Planillas
+                  </a>
+
+                  <a class="nav-link collapsed" href="/querys/print2">
+                    <div class="sb-nav-link-icon text-warning">
+                      <i class="fa fa-file-pdf"></i>
+                    </div>
+                    Registraduria
+                  </a>
+
+                  <a class="nav-link collapsed" href="/querys/rangofechas">
+                    <div class="sb-nav-link-icon text-danger">
+                      <i class="fa fa-file-pdf"></i>
+                    </div>
+                    Producción
+                  </a>
+
+                  <a class="nav-link collapsed" href="/querys/exportar">
+                    <div class="sb-nav-link-icon text-success">
+                      <i class="fa fa-file-excel"></i>
+                    </div>
+                    Exportar
+                  </a>
+                </nav>
+              </div>
+              {{/if}}
+            </nav>
+          </div>
+
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCausas"
+            aria-expanded="false" aria-controls="collapseCausas">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-check text-success"></i>
+            </div>
+            Causales
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down text-white"></i>
+            </div>
+          </a>
+          <div class="collapse" id="collapseCausas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link collapsed" href="/causas">
+                <div class="sb-nav-link-icon text-primary">
+                  <i class="fa fa-list-ol"></i>
+                </div>
+                Lista Causales
+              </a>
+
+              <a class="nav-link collapsed" href="/causas/add">
+                <div class="sb-nav-link-icon text-warning">
+                  <i class="fa fa-money-check"></i>
+                </div>
+                Adicciona Causal
+              </a>
+            </nav>
+          </div>
+
+          {{#if (eq user.rol 'Administrador')}}
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePuestos"
+            aria-expanded="false" aria-controls="collapsePuestos">
+            <div class="sb-nav-link-icon ">
+              <i class="fas fa-user-friends text-info"></i>
+            </div>
+            Puestos de Votación
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down text-white"></i>
+            </div>
+          </a>
+          <div class="collapse" id="collapsePuestos" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link collapsed" href="/puestos">
+                <div class="sb-nav-link-icon text-warning">
+                  <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                Lista los Puestos
+              </a>
+              <a class="nav-link collapsed" href="/puestos/add">
+                <div class="sb-nav-link-icon text-info">
+                  <i class="fa fa-restroom"></i>
+                </div>
+                Adiccionar Puestos
+              </a>
+            </nav>
+          </div>
+
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
+            aria-expanded="false" aria-controls="collapseUser">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-user-tie text-danger"></i>
+            </div>
+            Usuarios
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down text-white"></i>
+            </div>
+          </a>
+          <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link collapsed" href="/users">
+                <div class="sb-nav-link-icon text-warning">
+                  <i class="fas fa-users"></i>
+                </div>
+                Usuarios
+              </a>
+              <a class="nav-link collapsed" href="/users/add">
+                <div class="sb-nav-link-icon text-info">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                Adicionar Usuarios
+              </a>
+            </nav>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      <div class="sb-sidenav-footer">
+        <div class="small">Logged in:</div>
+        {{user.fullname}}
+      </div>
+    </nav>
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid">
+
+        {{/if}}
