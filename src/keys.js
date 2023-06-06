@@ -2,7 +2,7 @@ const config = require('./config');
 
 module.exports = {
 
-  /* 
+   
   database: {
     connectionLimit: 1000,
     host: config.host,
@@ -10,9 +10,9 @@ module.exports = {
     password: config.password,
     database: config.database
   }
- */
-  
  
+  
+ /* 
   //cuando se usa un hosting     
   database: {
     connectionLimit: 1000,
@@ -21,7 +21,7 @@ module.exports = {
     password: 'NrCQ@kH9B6jE&Fe',
     database: 'freedb_Acacias'
   } 
-
+ */
 
 };
 
