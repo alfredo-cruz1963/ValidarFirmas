@@ -272,7 +272,7 @@ ctrlfirmas.muestra = async (req, res) => {
           }
         }
 
-        res.render('firmas/add.hbs', { puestos, mcodmpio, mnombmpio, mcodpto, mnombpto, nomptoaux, mmesa, dcto: mcedula, datos: datosUsuario, genero: msexo, flag });
+        res.render('firmas/add.hbs', { puestos, mcodmpio, mnombmpio, mcodpto, mnombpto, mmesa, dcto: mcedula, datos: datosUsuario, genero: msexo, flag });
       } else {
         mcodcau = '04';
         mnomcau = 'NO ESTA REGISTRADA EN EL CENSO ELECTORAL';
