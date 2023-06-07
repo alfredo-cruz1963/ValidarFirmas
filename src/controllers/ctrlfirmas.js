@@ -123,14 +123,14 @@ ctrlfirmas.consultaAdres = async (req, res) => {
         "apellidos": resultados[4].Valor
       }
 
-      await page.close();
+      //await page.close();
       res.send(datosAdres);
     } else {
       res.send("Fallo");
     }
   })()
     .catch(err => res.sendStatus(500))
-  //.finally(async () => await page.close())
+    .finally(async () => await page.close())
 }
 
 // ********** despliega la pagina para grabar las firmas validas *************
@@ -235,7 +235,7 @@ ctrlfirmas.muestra = async (req, res) => {
       existe = false;
     }
 
-    await page.close();
+    //await page.close();
 
     if (mDpto == 'META' && mMpio == 'ACACIAS') {  // Censo solo para el municipio de Acacias - Meta
       existe = true;
@@ -252,21 +252,23 @@ ctrlfirmas.muestra = async (req, res) => {
         if (cytes[i].mpio == mCiudad) {
           mcodmpio = cytes[i].codigo;
           mnombmpio = cytes[i].mpio;
+          break;
         }
       }
 
       //busca el codigo del puesto de votacion
       let mPuesto = datosCenso.puesto;
-      let cadena = mPuesto;
+      //let cadena = mPuesto;
 
-      if (mPuesto.length > 12) {
+      //if (mPuesto.length > 12) {
         //cadena = mPuesto.substring(5);
-        cadena = mPuesto.slice(-10);
-      }
+      //  cadena = mPuesto.slice(-10);
+      //}
 
-      let loEncontro = 0;
-      let nomptoaux = "";
+      //let loEncontro = 0;
+      //let nomptoaux = "";
 
+      /* 
       for (let i = 0; i < puestos.length; i++) {
         if (puestos[i].codigo.substring(0, 5) == mcodmpio) {
           if (puestos[i].nombpuesto.includes(cadena)) {
@@ -277,10 +279,21 @@ ctrlfirmas.muestra = async (req, res) => {
           }
         }
       }
+      */
 
-      if (loEncontro = 0) {
-        nomptoaux = mPuesto;
+      for (let i = 0; i < puestos.length; i++) {
+        if (puestos[i].codigo.substring(0, 5) == mcodmpio) {
+          if (puestos[i].nombpuesto === mPuesto) {
+            mcodpto = puestos[i].codigo;
+            mnombpto = puestos[i].nombpuesto;
+            break;
+          }
+        }
       }
+
+      //if (loEncontro = 0) {
+      //  nomptoaux = mPuesto;
+      //}
 
       res.render('firmas/add.hbs', { puestos, mcodmpio, mnombmpio, mcodpto, mnombpto, nomptoaux, mmesa, dcto: mcedula, datos: datosUsuario, genero: msexo, flag });
     } else {
@@ -291,7 +304,7 @@ ctrlfirmas.muestra = async (req, res) => {
     }
   })()
     .catch(err => res.sendStatus(500))
-  //.finally(async () => await page.close())
+    .finally(async () => await page.close())
 };
 
 // *********** graba la firma *************************
