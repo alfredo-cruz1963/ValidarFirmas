@@ -77,60 +77,62 @@ ctrlfirmas.consultaAdres = async (req, res) => {
     args: ["--no-sandbox", "--disable-setuid-sandbox"], headless: true
   });
 
-  (async () => {
-    //solve and receive token envia direccion y captcha de la pagina
-    let token = await ac.solveRecaptchaV2Proxyless('https://aplicaciones.adres.gov.co/bdua_internet/Pages/ConsultarAfiliadoWeb.aspx', '6LcchMAUAAAAALbph_uFlNWt0exLPvlXcwUhZ6hG');
-    if (!token) {
-      console.log('result: ' + token);
-      return;
-    }
-
-    let page = await (await browserP).newPage();
-    await page.setUserAgent('5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
-    await page.goto('https://aplicaciones.adres.gov.co/bdua_internet/Pages/ConsultarAfiliadoWeb.aspx');
-
-    await page.waitForTimeout(2000);
-    await page.waitForSelector("#g-recaptcha-response");
-    //await page.type("#tipoDoc", "1");
-    await page.type("#txtNumDoc", cedula);
-
-    await page.evaluate(`document.getElementById("g-recaptcha-response").innerHTML="${token}";`);
-
-    await page.click("#btnConsultar");
-    await page.waitForTimeout(2000);
-
-    const pages = await (await browserP).pages();
-    const filaSelector = '#GridViewBasica tr';
-    const filas = await pages[2].$$(filaSelector);
-
-    if (filas.length > 0) {
-
-      const resultados = await Promise.all(filas.map(async (fila) => {
-        const celdas = await fila.$$('td');
-        const datosFila = {};
-
-        // Extraer información de cada celda de la fila
-        if (celdas && celdas.length >= 2) {
-          datosFila.tipoDato = await celdas[0].evaluate(node => node.innerText);
-          datosFila.Valor = await celdas[1].evaluate(node => node.innerText);
-        }
-        return datosFila;
-      }));
-
-      const datosAdres = {
-        "cedula": resultados[2].Valor,
-        "nombres": resultados[3].Valor,
-        "apellidos": resultados[4].Valor
+  try {
+    (async () => {
+      //solve and receive token envia direccion y captcha de la pagina
+      let token = await ac.solveRecaptchaV2Proxyless('https://aplicaciones.adres.gov.co/bdua_internet/Pages/ConsultarAfiliadoWeb.aspx', '6LcchMAUAAAAALbph_uFlNWt0exLPvlXcwUhZ6hG');
+      if (!token) {
+        console.log('result: ' + token);
+        return;
       }
 
-      //await page.close();
-      res.send(datosAdres);
-    } else {
-      res.send("Fallo");
-    }
-  })()
-    .catch(err => res.sendStatus(500))
-    .finally(async () => await page.close())
+      let page = await (await browserP).newPage();
+      await page.setUserAgent('5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
+      await page.goto('https://aplicaciones.adres.gov.co/bdua_internet/Pages/ConsultarAfiliadoWeb.aspx');
+
+      await page.waitForTimeout(2000);
+      await page.waitForSelector("#g-recaptcha-response");
+      //await page.type("#tipoDoc", "1");
+      await page.type("#txtNumDoc", cedula);
+
+      await page.evaluate(`document.getElementById("g-recaptcha-response").innerHTML="${token}";`);
+
+      await page.click("#btnConsultar");
+      await page.waitForTimeout(2000);
+
+      const pages = await (await browserP).pages();
+      const filaSelector = '#GridViewBasica tr';
+      const filas = await pages[2].$$(filaSelector);
+
+      if (filas.length > 0) {
+
+        const resultados = await Promise.all(filas.map(async (fila) => {
+          const celdas = await fila.$$('td');
+          const datosFila = {};
+
+          // Extraer información de cada celda de la fila
+          if (celdas && celdas.length >= 2) {
+            datosFila.tipoDato = await celdas[0].evaluate(node => node.innerText);
+            datosFila.Valor = await celdas[1].evaluate(node => node.innerText);
+          }
+          return datosFila;
+        }));
+
+        const datosAdres = {
+          "cedula": resultados[2].Valor,
+          "nombres": resultados[3].Valor,
+          "apellidos": resultados[4].Valor
+        }
+
+        //await page.close();
+        res.send(datosAdres);
+      } else {
+        res.send("Fallo");
+      }
+    })()
+  } catch (error) {
+    console.error('Ocurrió un error en la función asincrónica:', error);
+  } finally { async () => await page.close() }
 }
 
 // ********** despliega la pagina para grabar las firmas validas *************
@@ -179,132 +181,108 @@ ctrlfirmas.muestra = async (req, res) => {
   }
 
   //Comprobar si esta en el censo electoral
-  (async () => {
-    //solve and receive token
-    let token = await ac.solveRecaptchaV2Proxyless('https://wsp.registraduria.gov.co/censo/consultar', '6LcthjAgAAAAAFIQLxy52074zanHv47cIvmIHglH');
-    if (!token) {
-      console.log('result: ' + token);
-      return;
-    }
+  try {
+    (async () => {
+      //solve and receive token
+      let token = await ac.solveRecaptchaV2Proxyless('https://wsp.registraduria.gov.co/censo/consultar', '6LcthjAgAAAAAFIQLxy52074zanHv47cIvmIHglH');
+      if (!token) {
+        console.log('result: ' + token);
+        return;
+      }
 
-    page = await (await browserP).newPage();
-    await page.setUserAgent('5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
-    await page.goto('https://wsp.registraduria.gov.co/censo/consultar');
+      page = await (await browserP).newPage();
+      await page.setUserAgent('5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
+      await page.goto('https://wsp.registraduria.gov.co/censo/consultar');
 
-    await page.type('#nuip', mcedula);
-    await page.waitForSelector("#g-recaptcha-response");
+      await page.type('#nuip', mcedula);
+      await page.waitForSelector("#g-recaptcha-response");
 
-    await page.evaluate(`document.getElementById("g-recaptcha-response").innerHTML="${token}";`);
-    await page.click("#enviar");
-    await page.waitForTimeout(3000);
+      await page.evaluate(`document.getElementById("g-recaptcha-response").innerHTML="${token}";`);
+      await page.click("#enviar");
+      await page.waitForTimeout(3000);
 
-    await page.waitForTimeout(2000);
-    const mSelector = await page.$('#consulta');
+      await page.waitForTimeout(2000);
+      const mSelector = await page.$('#consulta');
 
-    if (mSelector !== null) {
-      //determinar si el selector es una tabla o un div
-      const tagName = await page.evaluate(el => el.tagName, mSelector);
+      if (mSelector !== null) {
+        //determinar si el selector es una tabla o un div
+        const tagName = await page.evaluate(el => el.tagName, mSelector);
 
-      if (tagName == 'TABLE') {
-        // Selecciona la tabla y verifica numero de filas  
-        const filaSelector = '#consulta tr';
-        const filas = await page.$$(filaSelector);
+        if (tagName == 'TABLE') {
+          // Selecciona la tabla y verifica numero de filas  
+          const filaSelector = '#consulta tr';
+          const filas = await page.$$(filaSelector);
 
-        // extrae los datos de la tabla con la informacion del puesto de votacion
-        for (let fila of filas) {
-          const celdas = await fila.$$('td');
-          const datosFila = {};
+          // extrae los datos de la tabla con la informacion del puesto de votacion
+          for (let fila of filas) {
+            const celdas = await fila.$$('td');
+            const datosFila = {};
 
-          if (celdas && celdas.length >= 2) {
-            datosFila.nuip = await celdas[0].evaluate(node => node.innerText);
-            datosFila.dpto = await celdas[1].evaluate(node => node.innerText);
-            datosFila.mpio = await celdas[2].evaluate(node => node.innerText);
-            datosFila.puesto = await celdas[3].evaluate(node => node.innerText);
-            datosFila.mesa = await celdas[5].evaluate(node => node.innerText);
-            mDpto = await celdas[1].evaluate(node => node.innerText);
-            mMpio = await celdas[2].evaluate(node => node.innerText);
+            if (celdas && celdas.length >= 2) {
+              datosFila.nuip = await celdas[0].evaluate(node => node.innerText);
+              datosFila.dpto = await celdas[1].evaluate(node => node.innerText);
+              datosFila.mpio = await celdas[2].evaluate(node => node.innerText);
+              datosFila.puesto = await celdas[3].evaluate(node => node.innerText);
+              datosFila.mesa = await celdas[5].evaluate(node => node.innerText);
+              mDpto = await celdas[1].evaluate(node => node.innerText);
+              mMpio = await celdas[2].evaluate(node => node.innerText);
 
-            datosCenso = datosFila;
-            existe = true;
+              datosCenso = datosFila;
+              existe = true;
+            }
           }
+        } else {
+          existe = false;
         }
       } else {
         existe = false;
       }
-    } else {
-      existe = false;
-    }
 
-    //await page.close();
+      //await page.close();
 
-    if (mDpto == 'META' && mMpio == 'ACACIAS') {  // Censo solo para el municipio de Acacias - Meta
-      existe = true;
-    } else {
-      existe = false;
-    }
-
-    if (existe) {
-      //Ubica el codigo dane del municipio
-      let mCiudad = datosCenso.mpio;
-      mmesa = datosCenso.mesa;
-
-      for (let i = 0; i < cytes.length; i++) {
-        if (cytes[i].mpio == mCiudad) {
-          mcodmpio = cytes[i].codigo;
-          mnombmpio = cytes[i].mpio;
-          break;
-        }
+      if (mDpto == 'META' && mMpio == 'ACACIAS') {  // Censo solo para el municipio de Acacias - Meta
+        existe = true;
+      } else {
+        existe = false;
       }
 
-      //busca el codigo del puesto de votacion
-      let mPuesto = datosCenso.puesto;
-      //let cadena = mPuesto;
+      if (existe) {
+        //Ubica el codigo dane del municipio
+        let mCiudad = datosCenso.mpio;
+        mmesa = datosCenso.mesa;
 
-      //if (mPuesto.length > 12) {
-        //cadena = mPuesto.substring(5);
-      //  cadena = mPuesto.slice(-10);
-      //}
-
-      //let loEncontro = 0;
-      //let nomptoaux = "";
-
-      /* 
-      for (let i = 0; i < puestos.length; i++) {
-        if (puestos[i].codigo.substring(0, 5) == mcodmpio) {
-          if (puestos[i].nombpuesto.includes(cadena)) {
-            mcodpto = puestos[i].codigo;
-            mnombpto = puestos[i].nombpuesto;
-            loEncontro = 1;
+        for (let i = 0; i < cytes.length; i++) {
+          if (cytes[i].mpio == mCiudad) {
+            mcodmpio = cytes[i].codigo;
+            mnombmpio = cytes[i].mpio;
             break;
           }
         }
-      }
-      */
 
-      for (let i = 0; i < puestos.length; i++) {
-        if (puestos[i].codigo.substring(0, 5) == mcodmpio) {
-          if (puestos[i].nombpuesto === mPuesto) {
-            mcodpto = puestos[i].codigo;
-            mnombpto = puestos[i].nombpuesto;
-            break;
+        //busca el codigo del puesto de votacion
+        let mPuesto = datosCenso.puesto;
+
+        for (let i = 0; i < puestos.length; i++) {
+          if (puestos[i].codigo.substring(0, 5) == mcodmpio) {
+            if (puestos[i].nombpuesto === mPuesto) {
+              mcodpto = puestos[i].codigo;
+              mnombpto = puestos[i].nombpuesto;
+              break;
+            }
           }
         }
+
+        res.render('firmas/add.hbs', { puestos, mcodmpio, mnombmpio, mcodpto, mnombpto, nomptoaux, mmesa, dcto: mcedula, datos: datosUsuario, genero: msexo, flag });
+      } else {
+        mcodcau = '04';
+        mnomcau = 'NO ESTA REGISTRADA EN EL CENSO ELECTORAL';
+        req.flash('message', 'La cedula numero: ' + mcedula + ', NO esta en el censo electoral.');
+        res.redirect('/firmas/view');
       }
-
-      //if (loEncontro = 0) {
-      //  nomptoaux = mPuesto;
-      //}
-
-      res.render('firmas/add.hbs', { puestos, mcodmpio, mnombmpio, mcodpto, mnombpto, nomptoaux, mmesa, dcto: mcedula, datos: datosUsuario, genero: msexo, flag });
-    } else {
-      mcodcau = '04';
-      mnomcau = 'NO ESTA REGISTRADA EN EL CENSO ELECTORAL';
-      req.flash('message', 'La cedula numero: ' + mcedula + ', NO esta en el censo electoral.');
-      res.redirect('/firmas/view');
-    }
-  })()
-    .catch(err => res.sendStatus(500))
-    .finally(async () => await page.close())
+    })()
+  } catch (error) {
+    console.error('Ocurrió un error en la función asincrónica:', error);
+  } finally { async () => await page.close() }
 };
 
 // *********** graba la firma *************************
