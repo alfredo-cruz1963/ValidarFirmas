@@ -259,7 +259,7 @@ ctrlfirmas.muestra = async (req, res) => {
           }
         }
 
-        //busca el codigo del puesto de votacion
+        //busca el codigo del puesto de votacion con los datos traidos de la divipole
         let mPuesto = datosCenso.puesto;
 
         for (let i = 0; i < puestos.length; i++) {
