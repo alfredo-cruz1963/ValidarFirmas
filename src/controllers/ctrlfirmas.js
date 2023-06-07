@@ -182,7 +182,7 @@ ctrlfirmas.muestra = async (req, res) => {
 
   //Comprobar si esta en el censo electoral
   try {
-    (async () => {
+    await (async () => {
       //solve and receive token
       let token = await ac.solveRecaptchaV2Proxyless('https://wsp.registraduria.gov.co/censo/consultar', '6LcthjAgAAAAAFIQLxy52074zanHv47cIvmIHglH');
       if (!token) {

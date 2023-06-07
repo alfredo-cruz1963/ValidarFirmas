@@ -112,7 +112,7 @@ ctrlquerys.edit = async(req, res) => {
   const cytes = await pool.query('SELECT * FROM dane WHERE codigo = ?', mcodmpio);
   mnombmpio = cytes[0].mpio;
   mcodpto = datos[0].puesto;
-  const puestos = await pool.query('SELECT codigo, nombpuesto FROM puestosmeta WHERE codigo = ?', mcodpto);
+  const puestos = await pool.query('SELECT codigo, nombpuesto FROM divipol WHERE codigo = ?', mcodpto);
   mnombpto = puestos[0].nombpuesto;
 
   res.render('querys/edit.hbs', { datos: datos[0], genero: xsexo, nombmpio: mnombmpio, nombpto: mnombpto });   
