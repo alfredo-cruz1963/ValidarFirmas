@@ -22,14 +22,14 @@ ctrlpuestos.new = async (req, res) => {
         mesas
     }; 
  
-    const puestos = await pool.query('SELECT codigo FROM puestosmeta WHERE codigo = ?', mcodigo);   
+    const puestos = await pool.query('SELECT codigo FROM divipol WHERE codigo = ?', mcodigo);   
 
     if (puestos.length > 0) {
       req.flash('message', 'Puesto con el código ' + mcodigo + ', YA existe.');
       res.redirect('/puestos/add');
     }
 
-    await pool.query('INSERT INTO puestosmeta set ?', [newPuesto]);
+    await pool.query('INSERT INTO divipol set ?', [newPuesto]);
     req.flash('success', 'Puesto de votación se Grabo Correctamente');
     res.redirect('/puestos');   
 };
@@ -43,7 +43,7 @@ ctrlpuestos.list = async (req, res) => {
 // ************** Delete *********************
 ctrlpuestos.delete = async (req, res) => {
     const { codigo } = req.params;
-    await pool.query('DELETE FROM puestosmeta WHERE codigo = ?', [codigo]);
+    await pool.query('DELETE FROM divipol WHERE codigo = ?', [codigo]);
     req.flash('success', 'El Puesto de Votación fue Borrado Correctamente');
     res.redirect('/puestos');
 };
@@ -71,7 +71,7 @@ ctrlpuestos.update = async (req, res) => {
         mesas
     };
 
-    await pool.query('UPDATE puestosmeta set ? WHERE codigo = ?', [newPuesto, codigo]);
+    await pool.query('UPDATE divipol set ? WHERE codigo = ?', [newPuesto, codigo]);
     req.flash('success', 'El Puesto se Actualizado Correctamente');
     res.redirect('/puestos');
 };
