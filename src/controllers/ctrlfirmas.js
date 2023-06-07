@@ -239,7 +239,6 @@ ctrlfirmas.muestra = async (req, res) => {
       }
 
       //await page.close();
-
       if (mDpto == 'META' && mMpio == 'ACACIAS') {  // Censo solo para el municipio de Acacias - Meta
         existe = true;
       } else {
