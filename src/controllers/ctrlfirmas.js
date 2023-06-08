@@ -160,7 +160,6 @@ ctrlfirmas.muestra = async (req, res) => {
   const dbMeta = await pool.query('SELECT * FROM meta WHERE cedula = ?', mcedula);
   const cytes = await pool.query('SELECT codigo, mpio FROM dane');
   const puestos = await pool.query("SELECT codigo, nombpuesto FROM divipol WHERE codmpio = '52005'");
-  console.log(puestos)
 
   mnombre = "";
   if (dbMeta.length > 0) {
