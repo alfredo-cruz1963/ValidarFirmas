@@ -158,7 +158,7 @@ ctrlfirmas.muestra = async (req, res) => {
 
   ac.setAPIKey(config.setapikey);
   const browserP = puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"], headless: false
+    args: ["--no-sandbox", "--disable-setuid-sandbox"], headless: true
   });
 
   const dbMeta = await pool.query('SELECT * FROM meta WHERE cedula = ?', mcedula);
