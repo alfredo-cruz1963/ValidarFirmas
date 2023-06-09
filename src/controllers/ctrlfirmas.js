@@ -78,6 +78,7 @@ ctrlfirmas.consultaAdres = async (req, res) => {
   });
 
   try {
+    const browser = await browserP; // Obtener la instancia del navegador
     (async () => {
       //solve and receive token envia direccion y captcha de la pagina
       let token = await ac.solveRecaptchaV2Proxyless('https://aplicaciones.adres.gov.co/bdua_internet/Pages/ConsultarAfiliadoWeb.aspx', '6LcchMAUAAAAALbph_uFlNWt0exLPvlXcwUhZ6hG');
@@ -130,10 +131,12 @@ ctrlfirmas.consultaAdres = async (req, res) => {
         await page.close();
         res.send("Fallo");
       }
+      const browser = await browserP;
+      await browser.close();
     })()
   } catch (error) {
     console.error('Ocurrió un error en la función asincrónica:', error);
-  } 
+  }
 }
 
 // ********** despliega la pagina para grabar las firmas validas *************
@@ -155,7 +158,7 @@ ctrlfirmas.muestra = async (req, res) => {
 
   ac.setAPIKey(config.setapikey);
   const browserP = puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"], headless: true
+    args: ["--no-sandbox", "--disable-setuid-sandbox"], headless: false
   });
 
   const dbMeta = await pool.query('SELECT * FROM meta WHERE cedula = ?', mcedula);
@@ -183,6 +186,7 @@ ctrlfirmas.muestra = async (req, res) => {
 
   //Comprobar si esta en el censo electoral
   try {
+    const browser = await browserP; // Obtener la instancia del navegador
     (async () => {
       //solve and receive token
       let token = await ac.solveRecaptchaV2Proxyless('https://wsp.registraduria.gov.co/censo/consultar', '6LcthjAgAAAAAFIQLxy52074zanHv47cIvmIHglH');
@@ -240,7 +244,7 @@ ctrlfirmas.muestra = async (req, res) => {
       }
 
       await page.close();
-      
+
       if (mDpto == 'META' && mMpio == 'ACACIAS') {  // Censo solo para el municipio de Acacias - Meta
         existe = true;
       } else {
@@ -280,6 +284,8 @@ ctrlfirmas.muestra = async (req, res) => {
         req.flash('message', 'La cedula numero: ' + mcedula + ', NO esta en el censo electoral.');
         res.redirect('/firmas/view');
       }
+      const browser = await browserP;
+      await browser.close();
     })()
   } catch (error) {
     console.error('Ocurrió un error en la función asincrónica:', error);
