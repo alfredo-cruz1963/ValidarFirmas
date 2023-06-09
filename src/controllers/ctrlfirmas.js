@@ -124,15 +124,16 @@ ctrlfirmas.consultaAdres = async (req, res) => {
           "apellidos": resultados[4].Valor
         }
 
-        //await page.close();
+        await page.close();
         res.send(datosAdres);
       } else {
+        await page.close();
         res.send("Fallo");
       }
     })()
   } catch (error) {
     console.error('Ocurrió un error en la función asincrónica:', error);
-  } finally { async () => await page.close() }
+  } 
 }
 
 // ********** despliega la pagina para grabar las firmas validas *************
@@ -182,7 +183,7 @@ ctrlfirmas.muestra = async (req, res) => {
 
   //Comprobar si esta en el censo electoral
   try {
-    await (async () => {
+    (async () => {
       //solve and receive token
       let token = await ac.solveRecaptchaV2Proxyless('https://wsp.registraduria.gov.co/censo/consultar', '6LcthjAgAAAAAFIQLxy52074zanHv47cIvmIHglH');
       if (!token) {
@@ -238,7 +239,8 @@ ctrlfirmas.muestra = async (req, res) => {
         existe = false;
       }
 
-      //await page.close();
+      await page.close();
+      
       if (mDpto == 'META' && mMpio == 'ACACIAS') {  // Censo solo para el municipio de Acacias - Meta
         existe = true;
       } else {
@@ -281,7 +283,7 @@ ctrlfirmas.muestra = async (req, res) => {
     })()
   } catch (error) {
     console.error('Ocurrió un error en la función asincrónica:', error);
-  } finally { async () => await page.close() }
+  } 
 };
 
 // *********** graba la firma *************************

@@ -24,6 +24,7 @@ const PDFDocument = require('pdfkit');
 const { database } = require('./keys');
 const puppeteer = require("puppeteer");
 const ac = require("@antiadmin/anticaptchaofficial");
+const EventEmitter = require('events');
 
 // Intializations
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.json());
 require('./lib/passport');
 
 // Settings
+process.setMaxListeners(15); // Establece el límite máximo a 15 listeners, puedes ajustar este número según tus necesidades
 app.set('port', process.env.PORT || 6500);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
